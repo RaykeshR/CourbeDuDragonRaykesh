@@ -7,12 +7,15 @@ import javax.swing.JFrame;
 // javac DragonCurve.java;java DragonCurve --Choix --délai/Durée_entre_rendu
 //DANGER eliptique à partir de là :
 //javac DragonCurve.java;java DragonCurve 50 25 // NE pas faire sans connaisance
+import java.util.concurrent.ThreadLocalRandom;
+//javac DragonCurve.java;java DragonCurve 5 250 // NE pas faire sans connaisance
 
 
 public class DragonCurve extends JFrame {
     int X,Y;
     private List<Integer> turns;
     private double AngleDeDepart, TailleDesCotes;
+    private boolean rnd;
     
     public DragonCurve(int n) {
         super("Dragon Curve Raykesh");
@@ -48,6 +51,48 @@ public class DragonCurve extends JFrame {
 
         if(AngleDeDepart == 0)
             TailleDesCotes/=2;
+    }
+    public DragonCurve(int n,int x, int y,boolean AvecAngleDeDepartNonNull,boolean rnd) {//AvecAngleDeDepartNonNull par Default à true
+        super("Dragon Curve Raykesh");
+        this.rnd = rnd;
+        if(rnd){
+            //int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+            //int randomNum = ThreadLocalRandom.current().nextInt(0, max + 1);
+            //...
+
+            this.X=x;
+            this.Y=y;
+            int r  =(ThreadLocalRandom.current().nextInt(00, this.X/8 + 1)/100);
+            int r2 =(ThreadLocalRandom.current().nextInt(00, this.Y/8 + 1)/100);
+            //setBounds(50,50, X,Y);
+            //setBounds(this.X/8, this.Y/8, (this.X-this.X/4)*(ThreadLocalRandom.current().nextInt(90, 100 + 1)/100), (this.Y-this.Y/4)*(ThreadLocalRandom.current().nextInt(100, 100 + 1)/100));
+            setBounds(r, r2, (this.X-this.X/4), (this.Y-this.Y/4));
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            turns = getSequence(n);
+            if (AvecAngleDeDepartNonNull){
+                AngleDeDepart = -n * (Math.PI / 4);//Optionel
+            }else{AngleDeDepart =0;}
+    
+            TailleDesCotes = 400 / Math.pow(2, n / 2.);
+    
+            if(AngleDeDepart == 0)
+                TailleDesCotes/=2;
+        }else{
+            //this(n,x,y,true);
+            this.X=x;this.Y=y;
+            //setBounds(50,50, X,Y);
+            setBounds(this.X/8, this.Y/8, this.X-this.X/4, this.Y-this.Y/4);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            turns = getSequence(n);
+            if (AvecAngleDeDepartNonNull){
+                AngleDeDepart = -n * (Math.PI / 4);//Optionel
+            }else{AngleDeDepart =0;}
+    
+            TailleDesCotes = 400 / Math.pow(2, n / 2.);
+    
+            if(AngleDeDepart == 0)
+                TailleDesCotes/=2;
+        }
     }
     
 
@@ -130,6 +175,12 @@ public class DragonCurve extends JFrame {
                         new DragonCurve(i,1920,1080).setVisible(true);Thread.sleep(x);
                     }
                     if(Choix!=50) break;
+                case 5:
+                    //int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+                    for (int i = 0; i < 10; i++){
+                        new DragonCurve(i,1920,1080,true,true).setVisible(true);Thread.sleep(x);
+                    }
+                    break;
             
                 default:
                     System.err.println("?"+"Vous vous etes trompe de choix");//?Vous vous êtes trompé de choix
