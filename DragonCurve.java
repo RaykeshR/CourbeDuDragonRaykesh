@@ -1,4 +1,4 @@
-import java.util.*; 
+import java.util.*;  
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JFrame;
